@@ -1,17 +1,24 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      {{config.headerText}}
+      <h1>{{config.headerText}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th *ngFor="let column of config.columns">
-              {{column.header}}
+            <th *ngFor="let column of config.columns" class="column-header" role="button" (click)="changeSort(column)">
+                {{column.header}}
+                <i class="fa fa-sort-asc" *ngIf="column.sortMode == ColumnSortMode.ASC"></i>
+                <i class="fa fa-sort-desc" *ngIf="column.sortMode == ColumnSortMode.DESC"></i>
+                <i class="fa fa-sort" *ngIf="column.sortMode == ColumnSortMode.NONE"></i>
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let row of config.items">
+          <tr *ngFor="let row of config.items | orderBy : order : reverse">
             <td *ngFor="let column of config.columns">
               {{row[column.field]}}
             </td>

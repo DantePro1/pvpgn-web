@@ -5,18 +5,34 @@ export enum ColumnType {
     FIELD = 0
 }
 
-export class GobColumn {
-    constructor (
-        columnType: ColumnType,
-        header: string,
-        field: string,
-     ) { }
+export enum ColumnSortMode {
+  NONE = 0,
+  ASC = 1,
+  DESC = 2
+}
+
+export class Column {
+  sortMode: ColumnSortMode = ColumnSortMode.NONE;
+  columnType: ColumnType;
+  header: string;
+  field: string;
+
+  constructor(
+    columnType: ColumnType,
+    header: string,
+    field: string,
+  ) {
+    this.sortMode = ColumnSortMode.NONE;
+    this.columnType = columnType;
+    this.header = header;
+    this.field = field;
+  }
 }
 
 export class TableConfig<T> {
   headerText : string;
   items : Array<T> = null;
-  columns: GobColumn[] = [];
+  columns: Column[] = [];
 }
 
 @Component({
@@ -27,9 +43,27 @@ export class TableConfig<T> {
 export class GenericTableComponent<T> implements OnInit {
   @Input() config : TableConfig<T>;
 
+  public ColumnSortMode = ColumnSortMode;
+  public order: string;
+  public reverse: boolean = false;
+
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  changeSort(col: Column) {
+    if(this.order == col.field) {
+      this.reverse = !this.reverse;
+      if(this.reverse)
+        col.sortMode = ColumnSortMode.DESC;
+      else
+        col.sortMode = ColumnSortMode.ASC;
+    }
+    else {
+      this.config.columns.forEach(i => i.sortMode = ColumnSortMode.NONE);
+      col.sortMode = ColumnSortMode.ASC;
+      this.order = col.field;
+    }
   }
 
 }

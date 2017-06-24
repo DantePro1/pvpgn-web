@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { OrderModule } from 'ngx-order-pipe';
+
 import { AppComponent } from './app.component';
 import { UsersComponent } from './components/users/users.component';
 import { GenericDataService } from "app/generics/generic-data.service";
@@ -22,10 +25,12 @@ import { HomeComponent } from './components/home/home.component';
     HomeComponent
   ],
   imports: [
+    NgbModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutes
+    AppRoutes,
+    OrderModule
   ],
   providers: [
     GenericDataService

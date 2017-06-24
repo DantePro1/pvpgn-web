@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { GenericDataService } from "app/generics/generic-data.service";
 import { User } from "app/interfaces/user";
 import { environment } from "environments/environment";
-import { TableConfig, ColumnType } from "app/generics/generic-table/generic-table.component";
+import { TableConfig, ColumnType, Column } from "app/generics/generic-table/generic-table.component";
 import { UserModel } from "app/models/user.model";
 
 @Component({
@@ -21,7 +21,6 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.userData.getArray(environment.apiUrl + 'users.php').subscribe(users => {
       this.users = users;
-      console.log(users);
       this.userTableConfig.items = users.map(user => {
         let newUser = new UserModel();
         newUser.username = user.acct_username;
@@ -31,7 +30,6 @@ export class UsersComponent implements OnInit {
         newUser.accountCreated  = new Date(parseInt(user.acct_ctime)*1000);
         return newUser;
       });
-      console.log(this.userTableConfig.items);
     });
     this.buildUsersTable();
   }
@@ -39,12 +37,11 @@ export class UsersComponent implements OnInit {
   buildUsersTable() {
     this.userTableConfig.headerText = "Users";
     this.userTableConfig.columns = [ 
-        {columnType: ColumnType.FIELD, header: "Username", field: "username" },
-        {columnType: ColumnType.FIELD, header: "Email", field: "email" },
-        {columnType: ColumnType.FIELD, header: "isAdmin", field: "isAdmin" },
-        {columnType: ColumnType.FIELD, header: "lastLogin", field: "lastLogin" },
-        {columnType: ColumnType.FIELD, header: "accountCreated", field: "accountCreated" }
+        new Column(ColumnType.FIELD, "Username", "username"),
+        new Column(ColumnType.FIELD, "Email", "email"),
+        new Column(ColumnType.FIELD, "isAdmin", "isAdmin"),
+        new Column(ColumnType.FIELD, "lastLogin", "lastLogin"),
+        new Column(ColumnType.FIELD, "accountCreated", "accountCreated")
     ];
   }
-
 }
