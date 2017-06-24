@@ -1,3 +1,7 @@
 <ul>
   <li *ngFor="let item of users">{{item.username}}</li>
 </ul>
+
+<app-generic-table 
+  [config]="userTableConfig">
+</app-generic-table>

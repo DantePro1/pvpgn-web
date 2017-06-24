@@ -1,3 +1,23 @@
-<p>
-  generic-table works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      {{config.headerText}}
+      <table>
+        <thead>
+          <tr>
+            <th *ngFor="let column of config.columns">
+              {{column.header}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of config.items">
+            <td *ngFor="let column of config.columns">
+              {{row[column.field]}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

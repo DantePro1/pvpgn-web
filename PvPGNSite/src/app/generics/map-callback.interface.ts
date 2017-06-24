@@ -1,0 +1,1 @@
+export interface mapCallback { (item: any): any }
