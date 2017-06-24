@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GenericDataService } from "app/generics/generic-data.service";
 import { User } from "app/interfaces/user";
+import { environment } from "environments/environment";
 
 @Component({
   selector: 'app-users',
@@ -15,7 +16,7 @@ export class UsersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userData.getArray("http://localhost/users.php").subscribe(users => {
+    this.userData.getArray(environment.apiUrl + 'users.php').subscribe(users => {
       this.users = users;
     });
   }
